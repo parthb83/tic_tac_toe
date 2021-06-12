@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 
 import './double_player.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage();
 
+  @override
+  State<StatefulWidget> createState() {
+    return _HomePageState();
+  }
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -15,7 +22,10 @@ class HomePage extends StatelessWidget {
           Container(
             child: Text(
               "Choose Your Mode",
-              style: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 40.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             padding: EdgeInsets.fromLTRB(0.0, 90.0, 0.0, 30.0),
           ),
@@ -36,7 +46,14 @@ class HomePage extends StatelessWidget {
             height: 80,
             child: ElevatedButton(
               child: Text("Double Player"),
-              onPressed: () => DoublePlayer(),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DoublePlayer(),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 primary: Colors.amber,
               ),
