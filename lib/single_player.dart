@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './double_player_over.dart';
-
 import './main.dart';
+
+import './single_player_over.dart';
 
 class BoardEssentials {
   final id;
@@ -11,18 +11,18 @@ class BoardEssentials {
   BoardEssentials({this.id, this.isClickable = true});
 }
 
-class DoublePlayer extends StatefulWidget {
-  DoublePlayer();
+class SinglePlayer extends StatefulWidget {
+  SinglePlayer();
 
   @override
   State<StatefulWidget> createState() {
-    return _DoublePlayerState();
+    return _SinglePlayerState();
   }
 }
 
-class _DoublePlayerState extends State<DoublePlayer> {
-  String player_1 = "O";
-  String player_2 = "X";
+class _SinglePlayerState extends State<SinglePlayer> {
+  String humanPlayer = "O";
+  String aiPlayer = "X";
   int chance = 0;
   var boardDesc = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
@@ -50,36 +50,51 @@ class _DoublePlayerState extends State<DoublePlayer> {
   }
 
   void gamePlay(BoardEssentials be) {
-    ++chance;
     setState(() {
-      if (chance % 2 == 1) {
-        boardDesc[be.id - 1] = player_1;
-        if (checkWin(player_1)) {
-          showDialog(
-            context: context,
-            builder: (_) => DoublePlayerOver("Player-1"),
-          );
-        }
-      } else {
-        boardDesc[be.id - 1] = player_2;
-        if (checkWin(player_2)) {
-          showDialog(
-            context: context,
-            builder: (_) => DoublePlayerOver("Player-2"),
-          );
-        }
-      }
-
-      if (chance == 9 &&
-          checkWin(player_1) == false &&
-          checkWin(player_2) == false) {
+      ++chance;
+      boardDesc[be.id - 1] = humanPlayer;
+      be.isClickable = false;
+      if (checkWin(humanPlayer)) {
         showDialog(
           context: context,
-          builder: (_) => DoublePlayerOver(""),
+          builder: (_) => SinglePlayerOver("You"),
         );
       }
 
-      be.isClickable = false;
+      if (chance == 9 &&
+          checkWin(humanPlayer) == false &&
+          checkWin(aiPlayer) == false) {
+        showDialog(
+          context: context,
+          builder: (_) => SinglePlayerOver(""),
+        );
+      }
+
+      if (!checkWin(humanPlayer) && chance != 9) {
+        int bestScore = -10000000;
+        int bestMove = -1;
+        for (int i = 0; i < 9; i++) {
+          if (boardDesc[i] == " ") {
+            boardDesc[i] = aiPlayer;
+            int checkScore = minimax(chance, false);
+            boardDesc[i] = " ";
+            if (checkScore > bestScore) {
+              bestScore = checkScore;
+              bestMove = i;
+            }
+          }
+        }
+
+        ++chance;
+        boardDesc[bestMove] = aiPlayer;
+        boardProp[bestMove].isClickable = false;
+        if (checkWin(aiPlayer)) {
+          showDialog(
+            context: context,
+            builder: (_) => SinglePlayerOver("Computer"),
+          );
+        }
+      }
     });
   }
 
@@ -104,6 +119,52 @@ class _DoublePlayerState extends State<DoublePlayer> {
     return playWin;
   }
 
+  int minimax(height, isMaxi) {
+    if (height % 2 == 1) {
+      bool result = checkWin(aiPlayer);
+      if (result == true) {
+        return 1;
+      } else {
+        if (height + 1 == 9 && result == false) {
+          return 0;
+        }
+      }
+    } else {
+      bool result = checkWin(humanPlayer);
+      if (result == true) {
+        return -1;
+      } else {
+        if (height + 1 == 9 && result == false) {
+          return 0;
+        }
+      }
+    }
+
+    if (isMaxi) {
+      int bestScore = -10000000;
+      for (int i = 0; i < 9; i++) {
+        if (boardDesc[i] == " ") {
+          boardDesc[i] = aiPlayer;
+          int score = minimax(height + 1, false);
+          boardDesc[i] = " ";
+          if (bestScore < score) bestScore = score;
+        }
+      }
+      return bestScore;
+    } else {
+      int bestScore = 10000000;
+      for (int i = 0; i < 9; i++) {
+        if (boardDesc[i] == " ") {
+          boardDesc[i] = humanPlayer;
+          int score = minimax(height + 1, true);
+          boardDesc[i] = " ";
+          if (bestScore > score) bestScore = score;
+        }
+      }
+      return bestScore;
+    }
+  }
+
   void replayGame() {
     if (Navigator.canPop(context)) Navigator.pop(context);
 
@@ -118,7 +179,7 @@ class _DoublePlayerState extends State<DoublePlayer> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DoublePlayer(),
+            builder: (context) => SinglePlayer(),
           ),
         );
         break;
@@ -139,7 +200,7 @@ class _DoublePlayerState extends State<DoublePlayer> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Double Player"),
+          title: Text("Single Player"),
           actions: [
             Theme(
               data: Theme.of(context).copyWith(

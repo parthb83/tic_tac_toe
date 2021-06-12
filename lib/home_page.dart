@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './double_player.dart';
 
+import './single_player.dart';
+
 class HomePage extends StatefulWidget {
   HomePage();
 
@@ -27,14 +29,24 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            padding: EdgeInsets.fromLTRB(0.0, 90.0, 0.0, 30.0),
+            padding: EdgeInsets.fromLTRB(0.0, 130.0, 0.0, 60.0),
           ),
           Container(
             width: 200,
-            height: 80,
+            height: 100,
             child: ElevatedButton(
-              child: Text("Single Player"),
-              onPressed: null,
+              child: Text(
+                "Single Player",
+                style: TextStyle(fontSize: 25.0),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SinglePlayer(),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 primary: Colors.amber,
               ),
@@ -43,9 +55,12 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(
             width: 200,
-            height: 80,
+            height: 100,
             child: ElevatedButton(
-              child: Text("Double Player"),
+              child: Text(
+                "Double Player",
+                style: TextStyle(fontSize: 25.0),
+              ),
               onPressed: () {
                 Navigator.push(
                   context,
