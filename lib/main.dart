@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           height: 2500,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/gamebgm2.jpeg"),
+              image: AssetImage("assets/images/gamebgm3.jpg"),
               fit: BoxFit.cover,
             ),
           ),

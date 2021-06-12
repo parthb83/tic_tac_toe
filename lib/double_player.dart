@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import './double_player_over.dart';
 
+import './main.dart';
+
 class BoardEssentials {
   final id;
   bool isClickable;
@@ -110,6 +112,27 @@ class _DoublePlayerState extends State<DoublePlayer> {
     });
   }
 
+  void selectedItem(BuildContext context, item) {
+    switch (item) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DoublePlayer(),
+          ),
+        );
+        break;
+      
+      case 1: 
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyApp(),
+          ),
+        );
+    }
+  }
+
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(primaryColor: Colors.black),
@@ -117,13 +140,35 @@ class _DoublePlayerState extends State<DoublePlayer> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("Double Player"),
+          actions: [
+            Theme(
+              data: Theme.of(context).copyWith(
+                  textTheme: TextTheme().apply(bodyColor: Colors.black),
+                  dividerColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white)),
+              child: PopupMenuButton<int>(
+                color: Colors.black,
+                itemBuilder: (context) => [
+                  PopupMenuItem<int>(
+                    value: 0,
+                    child: Text("Reset"),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 1,
+                    child: Text("Main Menu"),
+                  ),
+                ],
+                onSelected: (item) => selectedItem(context, item),
+              ),
+            ),
+          ],
         ),
         body: Container(
           width: 1500,
           height: 2500,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/gamebgm2.jpeg"),
+              image: AssetImage("assets/images/gamebgm3.jpg"),
               fit: BoxFit.cover,
             ),
           ),

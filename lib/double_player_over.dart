@@ -15,7 +15,7 @@ class DoublePlayerOver extends StatelessWidget {
       title: Text(
         (playerName == "") ? ("Match was a Draw!") : (playerName + " Won!!!"),
       ),
-      content: Text("Wanna Play Another Game? Press Reset."),
+      content: Text("Wanna Play Another Game? Hit Reset."),
       actions: <Widget>[
         TextButton(
           onPressed: () {
