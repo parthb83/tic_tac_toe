@@ -97,7 +97,7 @@ class _SinglePlayerInfoState extends State<SinglePlayerInfo> {
                     style:
                         TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                   ),
-                  padding: EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+                  padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 30.0),
                 ),
                 Container(
                   child: ElevatedButton(
@@ -138,7 +138,11 @@ class _SinglePlayerInfoState extends State<SinglePlayerInfo> {
                   ),
                 ),
                 Container(
+                  width: 150,
+                  height: 120,
+                  padding: EdgeInsets.fromLTRB(0.0, 60.0, 0.0, 20.0),
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.amber),
                     child: Text("Ok"),
                     onPressed: () {
                       Navigator.push(

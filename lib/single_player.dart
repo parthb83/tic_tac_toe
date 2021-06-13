@@ -92,6 +92,17 @@ class _SinglePlayerState extends State<SinglePlayer> {
               SinglePlayerOver("You", humanPlayer, aiPlayer, isFirst),
         );
       }
+      if (isFirst == true) {
+          if (chance == 9 &&
+              checkWin(humanPlayer) == false &&
+              checkWin(aiPlayer) == false) {
+            showDialog(
+              context: context,
+              builder: (_) =>
+                  SinglePlayerOver("", humanPlayer, aiPlayer, isFirst),
+            );
+          }
+        }
 
       if (!checkWin(humanPlayer) &&
           ((isFirst == true && chance != 9) ||

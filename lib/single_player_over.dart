@@ -10,22 +10,29 @@ class SinglePlayerOver extends StatelessWidget {
   final aiPlayer;
   final isFirst;
 
-  SinglePlayerOver(this.playerName, this.humanPlayer, this.aiPlayer, this.isFirst);
+  SinglePlayerOver(
+      this.playerName, this.humanPlayer, this.aiPlayer, this.isFirst);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.black,
       title: Text(
         (playerName == "") ? ("Match was a Tie!") : (playerName + " Won!!!"),
+        style: TextStyle(color: Colors.white),
       ),
-      content: Text("Wanna Play Another Game? Hit Replay."),
+      content: Text(
+        "Wanna Play Another Game? Hit Replay.",
+        style: TextStyle(color: Colors.white),
+      ),
       actions: <Widget>[
         TextButton(
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SinglePlayer(humanPlayer, aiPlayer, isFirst),
+                builder: (context) =>
+                    SinglePlayer(humanPlayer, aiPlayer, isFirst),
               ),
             );
           },

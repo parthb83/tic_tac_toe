@@ -14,10 +14,15 @@ class DoublePlayerOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.black,
       title: Text(
         (playerName == "") ? ("Match was a Tie!") : (playerName + " Won!!!"),
+        style: TextStyle(color: Colors.white),
       ),
-      content: Text("Wanna Play Another Game? Hit Replay."),
+      content: Text(
+        "Wanna Play Another Game? Hit Replay.",
+        style: TextStyle(color: Colors.white),
+      ),
       actions: <Widget>[
         TextButton(
           onPressed: () {

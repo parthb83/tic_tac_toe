@@ -49,7 +49,7 @@ class _DoublePlayerInfo extends State<DoublePlayerInfo> {
                   padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 20.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: "Player-1",
+                      hintText: "Player-1 (O)",
                     ),
                     onFieldSubmitted: (value) {
                       setState(() {
@@ -62,7 +62,7 @@ class _DoublePlayerInfo extends State<DoublePlayerInfo> {
                   padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: "Player-2",
+                      hintText: "Player-2 (X)",
                     ),
                     onFieldSubmitted: (value) {
                       setState(() {
