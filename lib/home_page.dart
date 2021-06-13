@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './double_player_info.dart';
 
-import './single_player.dart';
+import './single_player_info.dart';
 
 class HomePage extends StatefulWidget {
   HomePage();
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SinglePlayer(),
+                    builder: (context) => SinglePlayerInfo(),
                   ),
                 );
               },

@@ -12,18 +12,28 @@ class BoardEssentials {
 }
 
 class SinglePlayer extends StatefulWidget {
-  SinglePlayer();
+  final humanPlayer;
+  final aiPlayer;
+  final isFirst;
+
+  SinglePlayer(this.humanPlayer, this.aiPlayer, this.isFirst);
 
   @override
   State<StatefulWidget> createState() {
-    return _SinglePlayerState();
+    return _SinglePlayerState(humanPlayer, aiPlayer, isFirst);
   }
 }
 
 class _SinglePlayerState extends State<SinglePlayer> {
-  String humanPlayer = "O";
-  String aiPlayer = "X";
+  String humanPlayer;
+  String aiPlayer;
+  bool isFirst;
   int chance = 0;
+
+  _SinglePlayerState(this.humanPlayer, this.aiPlayer, this.isFirst) {
+    if (isFirst == false) chance = 1;
+  }
+
   var boardDesc = [" ", " ", " ", " ", " ", " ", " ", " ", " "];
 
   List<BoardEssentials> boardProp = [];
@@ -32,6 +42,7 @@ class _SinglePlayerState extends State<SinglePlayer> {
   void initState() {
     super.initState();
     boardProp = doInit();
+    if (isFirst == false) firstMove();
   }
 
   List<BoardEssentials> doInit() {
@@ -49,6 +60,26 @@ class _SinglePlayerState extends State<SinglePlayer> {
     return boardid;
   }
 
+  void firstMove() {
+    int bestScore = -10000000;
+    int bestMove = -1;
+    for (int i = 0; i < 9; i++) {
+      if (boardDesc[i] == " ") {
+        boardDesc[i] = aiPlayer;
+        int checkScore = minimax(chance, false);
+        boardDesc[i] = " ";
+        if (checkScore > bestScore) {
+          bestScore = checkScore;
+          bestMove = i;
+        }
+      }
+    }
+
+    ++chance;
+    boardDesc[bestMove] = aiPlayer;
+    boardProp[bestMove].isClickable = false;
+  }
+
   void gamePlay(BoardEssentials be) {
     setState(() {
       ++chance;
@@ -57,20 +88,14 @@ class _SinglePlayerState extends State<SinglePlayer> {
       if (checkWin(humanPlayer)) {
         showDialog(
           context: context,
-          builder: (_) => SinglePlayerOver("You"),
+          builder: (_) =>
+              SinglePlayerOver("You", humanPlayer, aiPlayer, isFirst),
         );
       }
 
-      if (chance == 9 &&
-          checkWin(humanPlayer) == false &&
-          checkWin(aiPlayer) == false) {
-        showDialog(
-          context: context,
-          builder: (_) => SinglePlayerOver(""),
-        );
-      }
-
-      if (!checkWin(humanPlayer) && chance != 9) {
+      if (!checkWin(humanPlayer) &&
+          ((isFirst == true && chance != 9) ||
+              (isFirst == false && chance != 10))) {
         int bestScore = -10000000;
         int bestMove = -1;
         for (int i = 0; i < 9; i++) {
@@ -91,8 +116,32 @@ class _SinglePlayerState extends State<SinglePlayer> {
         if (checkWin(aiPlayer)) {
           showDialog(
             context: context,
-            builder: (_) => SinglePlayerOver("Computer"),
+            builder: (_) =>
+                SinglePlayerOver("Computer", humanPlayer, aiPlayer, isFirst),
           );
+        }
+        if (isFirst == true) {
+          if (chance == 9 &&
+              checkWin(humanPlayer) == false &&
+              checkWin(aiPlayer) == false) {
+            showDialog(
+              context: context,
+              builder: (_) =>
+                  SinglePlayerOver("", humanPlayer, aiPlayer, isFirst),
+            );
+          }
+        }
+
+        if (isFirst == false) {
+          if (chance == 10 &&
+              checkWin(humanPlayer) == false &&
+              checkWin(aiPlayer) == false) {
+            showDialog(
+              context: context,
+              builder: (_) =>
+                  SinglePlayerOver("", humanPlayer, aiPlayer, isFirst),
+            );
+          }
         }
       }
     });
@@ -125,8 +174,14 @@ class _SinglePlayerState extends State<SinglePlayer> {
       if (result == true) {
         return 1;
       } else {
-        if (height + 1 == 9 && result == false) {
-          return 0;
+        if (isFirst == true) {
+          if (height + 1 == 9 && result == false) {
+            return 0;
+          }
+        } else {
+          if (height + 1 == 10 && result == false) {
+            return 0;
+          }
         }
       }
     } else {
@@ -134,8 +189,14 @@ class _SinglePlayerState extends State<SinglePlayer> {
       if (result == true) {
         return -1;
       } else {
-        if (height + 1 == 9 && result == false) {
-          return 0;
+        if (isFirst == true) {
+          if (height + 1 == 9 && result == false) {
+            return 0;
+          }
+        } else {
+          if (height + 1 == 10 && result == false) {
+            return 0;
+          }
         }
       }
     }
@@ -179,12 +240,12 @@ class _SinglePlayerState extends State<SinglePlayer> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SinglePlayer(),
+            builder: (context) => SinglePlayer(humanPlayer, aiPlayer, isFirst),
           ),
         );
         break;
-      
-      case 1: 
+
+      case 1:
         Navigator.push(
           context,
           MaterialPageRoute(

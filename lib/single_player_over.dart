@@ -6,8 +6,11 @@ import './single_player.dart';
 
 class SinglePlayerOver extends StatelessWidget {
   final playerName;
+  final humanPlayer;
+  final aiPlayer;
+  final isFirst;
 
-  SinglePlayerOver(this.playerName);
+  SinglePlayerOver(this.playerName, this.humanPlayer, this.aiPlayer, this.isFirst);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class SinglePlayerOver extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => SinglePlayer(),
+                builder: (context) => SinglePlayer(humanPlayer, aiPlayer, isFirst),
               ),
             );
           },
