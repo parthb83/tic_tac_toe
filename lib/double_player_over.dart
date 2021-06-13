@@ -6,8 +6,10 @@ import './main.dart';
 
 class DoublePlayerOver extends StatelessWidget {
   final playerName;
+  final player1Name;
+  final player2Name;
 
-  DoublePlayerOver(this.playerName);
+  DoublePlayerOver(this.playerName, this.player1Name, this.player2Name);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class DoublePlayerOver extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DoublePlayer(),
+                builder: (context) => DoublePlayer(player1Name, player2Name),
               ),
             );
           },

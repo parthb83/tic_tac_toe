@@ -12,15 +12,28 @@ class BoardEssentials {
 }
 
 class DoublePlayer extends StatefulWidget {
-  DoublePlayer();
+  final player1Name;
+  final player2Name;
+
+  DoublePlayer(this.player1Name, this.player2Name);
 
   @override
   State<StatefulWidget> createState() {
-    return _DoublePlayerState();
+    return _DoublePlayerState(player1Name, player2Name);
   }
 }
 
 class _DoublePlayerState extends State<DoublePlayer> {
+  String player1Name;
+  String player2Name;
+  String currPlayer = "";
+  _DoublePlayerState(this.player1Name, this.player2Name) {
+    if (player1Name == "") player1Name = "Player-1";
+    if (player2Name == "") player2Name = "Player-2";
+
+    currPlayer = player1Name;
+  }
+
   String player_1 = "O";
   String player_2 = "X";
   int chance = 0;
@@ -53,19 +66,23 @@ class _DoublePlayerState extends State<DoublePlayer> {
     ++chance;
     setState(() {
       if (chance % 2 == 1) {
+        currPlayer = player2Name;
         boardDesc[be.id - 1] = player_1;
         if (checkWin(player_1)) {
           showDialog(
             context: context,
-            builder: (_) => DoublePlayerOver("Player-1"),
+            builder: (_) =>
+                DoublePlayerOver(player1Name, player1Name, player2Name),
           );
         }
       } else {
+        currPlayer = player1Name;
         boardDesc[be.id - 1] = player_2;
         if (checkWin(player_2)) {
           showDialog(
             context: context,
-            builder: (_) => DoublePlayerOver("Player-2"),
+            builder: (_) =>
+                DoublePlayerOver(player2Name, player1Name, player2Name),
           );
         }
       }
@@ -75,7 +92,7 @@ class _DoublePlayerState extends State<DoublePlayer> {
           checkWin(player_2) == false) {
         showDialog(
           context: context,
-          builder: (_) => DoublePlayerOver(""),
+          builder: (_) => DoublePlayerOver("", player1Name, player2Name),
         );
       }
 
@@ -118,12 +135,12 @@ class _DoublePlayerState extends State<DoublePlayer> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DoublePlayer(),
+            builder: (context) => DoublePlayer(player1Name, player2Name),
           ),
         );
         break;
-      
-      case 1: 
+
+      case 1:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -139,7 +156,7 @@ class _DoublePlayerState extends State<DoublePlayer> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Double Player"),
+          title: Text(currPlayer + " Turn"),
           actions: [
             Theme(
               data: Theme.of(context).copyWith(

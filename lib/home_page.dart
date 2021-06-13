@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './double_player.dart';
+import './double_player_info.dart';
 
 import './single_player.dart';
 
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DoublePlayer(),
+                    builder: (context) => DoublePlayerInfo(),
                   ),
                 );
               },
