@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
               "Choose Your Mode",
               style: TextStyle(
                 fontSize: 40.0,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w300,
               ),
             ),
             padding: EdgeInsets.fromLTRB(0.0, 130.0, 0.0, 60.0),
@@ -37,7 +37,10 @@ class _HomePageState extends State<HomePage> {
             child: ElevatedButton(
               child: Text(
                 "Single Player",
-                style: TextStyle(fontSize: 25.0),
+                style: TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               onPressed: () {
                 Navigator.push(
@@ -59,7 +62,10 @@ class _HomePageState extends State<HomePage> {
             child: ElevatedButton(
               child: Text(
                 "Double Player",
-                style: TextStyle(fontSize: 25.0),
+                style: TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w300,
+                ),
               ),
               onPressed: () {
                 Navigator.push(

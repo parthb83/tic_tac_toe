@@ -47,7 +47,7 @@ class _SinglePlayerInfoState extends State<SinglePlayerInfo> {
                   child: Text(
                     "Choose Your Shape",
                     style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300),
                   ),
                   padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 30.0),
                 ),
@@ -95,7 +95,7 @@ class _SinglePlayerInfoState extends State<SinglePlayerInfo> {
                   child: Text(
                     "Would you like to go first?",
                     style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w300),
                   ),
                   padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 30.0),
                 ),
